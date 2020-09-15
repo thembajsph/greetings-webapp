@@ -1,0 +1,77 @@
+<div class="container">
+
+    <div class="row center">
+        <h1>greetings</h1>
+        <form action="/greetings" method="POST">
+    </div>
+    {{greet.count}}
+    <div class="row col-3 center">
+
+        <label for="">Name</label>
+        <input type="text" id="textfield2" name="userName" value="{{greetings.getName}}"
+            placeholder="enter your name..." class="enterName">
+
+    </div>
+</div>
+</div>
+
+<div class="radiobuttonrow col-3 center ">
+
+    <span>
+        <label for="">Isixhosa</label>
+        <input type="radio" name="language" class="selectRadio" value="Isixhosa">
+    </span>
+    <span>
+        <label for="">English</label>
+        <input type="radio" name="language" class="selectRadio" value="English">
+    </span>
+    <span>
+        <label for="">Afrikaans</label>
+        <input type="radio" name="language" class="selectRadio" value="Afrikaans">
+    </span>
+    <span>
+        <!--label for="">counter</label-->
+        <p class="counter center " value="{{greetings.counter}}" onload="myScript"></p>
+    </span>
+
+</div>
+<div>
+
+
+</div>
+
+
+<div class="greetingsBtn row col-3 center ">
+
+    <button class="greetMeBtn" type="submit" name="button">Greet me!</button>
+    {{greet.names}}
+</div>
+
+<div class="message row col-3 center " id="alarmmsg">
+    {{message.info}}
+
+</div>
+
+
+<div class="entry center">
+    <h1> {{message.info}}</h1>
+</div>
+
+{{!-- <div> --}}
+ {{!-- <a href="/greeted"  class="btn center justify " >greeted names</a> --}}
+{{!-- </div> --}}
+{{!-- buttom to be a link to lead to the greets table page with all the greeted people score --}}
+{{!-- <a href="/actions/call">Call total</a>
+<button class="textClear" type="submit" onclick="clearTexo();" name="button">Greeted Tally!</button> --}}
+{{!-- <a href="/greets" class="btn">Greeted Tally!</a> --}}
+</form>
+
+
+<div>
+    {{!-- <button class="counterClear" type="submit" name="button">clear Counter!</button>
+    <button class="textClear" type="submit" onclick="clearTexo();" name="button">reset Name!</button> --}}
+</div>
+ <a href="/greets" class="button center justify ">Greetings Tally!</a> 
+ <a href="/greeted"  class="btn center justify " >greeted names</a>
+{{!-- will need a table fo my greets page here --}}
+{{!-- <a href="/greets" class="btn">Greeted Tally!</a> --}}
