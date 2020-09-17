@@ -6,7 +6,7 @@ module.exports = function greet(pool) {
 
     if (greetedNames.some(person => person.user === name)) {
       for (let key of greetedNames) {
-        console.log(key.counter + 1);
+        // console.log(key.counter + 1);
 
         if (key.user === name) {
           key.counter++;
@@ -24,25 +24,19 @@ module.exports = function greet(pool) {
   };
 
   async function enterName(name) {
-    const INSERT_QUERY = await pool.query('INSERT INTO greetings (name, count) values($1,$2)', [name,1])
+    const isAdded = await getCountForUser(name) > 0;
+    if (isAdded) {
+      await pool.query('UPDATE greetings SET count = count + 1 WHERE name = $1', [name]);
+      return;
+    }
+
+    await pool.query('INSERT INTO greetings (name, count) values($1,$2)', [name, 1])
   };
-
-
-
-  //const EVERY_QUERY  = await pool.query ('SELECT * from greetings')
-  // if (!greetedNames.includes(name)) {
-  //   greetedNames.push(name)
-  // }
-
-
-
-
-
 
 
   async function existDbAndCount(name) {
     try {
-      
+
       const updateQuery = await pool.query('SELECT name FROM greetings WHERE name = $1', [name]);
       return updateQuery;
     } catch (error) {
@@ -50,79 +44,8 @@ module.exports = function greet(pool) {
       console.log(error.message)
       console.log(error.stack)
     }
-    // };
-    //  SET count = count.rows
-    // FROM count.rows
-
+  
   }
-
-
-
-
-  function updateCount(name) {
-
-    try {
-
-      const countQuery = pool.query('UPDATE greetings SET count = count +1 WHERE name = $1', [name]);
-
-
-
-console.log(countQuery);
-    } catch (error) {
-      console.log(error.name)
-      console.log(error.message)
-      console.log(error.stack)
-    };
-  }
-
-
-  // function updatedate() {
-  //   try {
-  //     const dateQuery = 
-
-  //     // return dateQuery;
-
-
-  //   } catch (error) {
-  // 
-    //  console.log(error.name)
-  //     console.log(error.message)
-  //     console.log(error.stack)
-  //   };
-
-  // }
-
-
-
-
-     
-  function errorFlash(name) {
-
-    try {
-      if (name = "") {
-
-    if (lang === "Isixhosa" ) {
-       req.flash = "faka igama lakho," + name + " !"
-     }
-     else if (lang === "English") {
-       req.flash =  "do enter your name, " + name + " !"
-     }
-     else if (lang === "Afrikaans") {
-       req.flash = "sleutel, jou naam asseblief" + name + " !"
-     }
-   }
-   
- }  
-     catch (error) {
-     console.log(error.name)
-     console.log(error.message)
-     console.log(error.stack)
-    };
-   
-  }
-    
-
-
 
   async function language(lang, name) {
     //var rowCount = table.rows.length;
@@ -131,9 +54,9 @@ console.log(countQuery);
     console.log(check);
     if (check.rows === 0) {
 
-     await enterName(name)
-    }  
-   await updateCount(name)
+      await enterName(name)
+    }
+    // await updateCount(name)
     if (lang === "Isixhosa") {
       return "Molo, " + name + " !"
     }
@@ -146,8 +69,6 @@ console.log(countQuery);
 
   }
 
-
-
   async function getName() {
     let names = await pool.query('SELECT name FROM greetings')
     console.log(names);
@@ -158,7 +79,7 @@ console.log(countQuery);
 
   async function overallCounter() {
     let count = await pool.query('SELECT id FROM greetings');
-    console.log( count.rowCount);
+    console.log(count.rowCount);
     return count.rowCount;
   }
 
@@ -170,6 +91,41 @@ console.log(countQuery);
   }
 
 
+  const getCountForUser = async (name) => {
+    let selectQuery = await pool.query('SELECT count FROM greetings WHERE name = $1 ', [name]);
+    if (selectQuery.rows[0] && selectQuery.rows[0].count) {
+      return selectQuery.rows[0].count;
+    }
+
+    return 0;
+  }
+
+  async function resetFtn() {
+
+    let restart = await pool.query('DELETE FROM greetings ');
+    return restart;
+  };
+
+
+  async function resetAndClear() {
+
+    let allQuery = await pool.query('SELECT * FROM greeting');
+
+    //instance.counter();
+    await getCountForUser()
+    // var a = 0;
+
+    var buttonpressed = false;
+
+    if (!buttonpressed && allQuery) { // Check if the localStorage object exists
+      await resetFtn();
+      //   window.localStorage.clear()  //clears the localstorage
+      // instance.clear();
+      await location.reload();
+
+    }
+
+  };
 
   return {
     clear,
@@ -180,10 +136,42 @@ console.log(countQuery);
     hasNumbers,
     enterName,
     existDbAndCount,
-    updateCount,
-    errorFlash
+    getCountForUser,
+    resetFtn,
+    resetAndClear
 
 
   };
 
 };
+
+
+// function errorFlash(name) {
+
+  //   try {
+  //     if (name = "") {
+
+  //       if (lang === "Isixhosa") {
+  //         req.flash = "faka igama lakho," + name + " !"
+  //       }
+  //       else if (lang === "English") {
+  //         req.flash = "do enter your name, " + name + " !"
+  //       }
+  //       else if (lang === "Afrikaans") {
+  //         req.flash = "sleutel, jou naam asseblief" + name + " !"
+  //       }
+  //     }
+
+  //   }
+  //   catch (error) {
+  //     console.log(error.name)
+  //     console.log(error.message)
+  //     console.log(error.stack)
+  //   };
+
+  // }
+
+   //const EVERY_QUERY  = await pool.query ('SELECT * from greetings')
+  // if (!greetedNames.includes(name)) {
+  //   greetedNames.push(name)
+  // }

@@ -73,8 +73,9 @@ app.get("/", async function (req, res) {
 
 
   //flash warning message
-  req.flash('info', 'Flash Message Added');
-
+  req.flash('info', );
+  
+// 'Flash Message Added'
   let greet = {
     count: await greetings.overallCounter()
   };
@@ -86,7 +87,7 @@ app.get("/", async function (req, res) {
   res.render("index", {
     greet,
     // timeOfGreets,
-    names: await greetedNames.rows
+    names: await greetedNames.rows, title: "Home"
   });
 });
 
@@ -101,15 +102,21 @@ app.post("/greetings", async function (req, res) {
 
     const greets = req.body.language;
     var userName = req.body.userName;
-    const time = req.body.time;
+   // const time = req.body.time;
     //  var greetingPerson = await greetings.enterName(userName)
 
     //  await greetings.getName();
-    if (userName ==="") {
-
-      await greetings.errorFlash();
-    }
-
+    if(!(greets && userName))  {
+      req.flash("info", "do enter your name and select a language")
+    }else if (!userName) {
+      req.flash("info", "enter your name")
+    }else if (!greets) {
+        req.flash("info", "select a lang!")
+      }
+      // else if (lang === "Afrikaans") {
+      //   req.flash = "sleutel, jou naam asseblief" + name + " !"
+      // }
+    
     greetings.enterName(userName)
 
     let greet = {
@@ -129,14 +136,14 @@ app.post("/greetings", async function (req, res) {
     console.log(error.name);
     console.log(error.message);
     console.log(error.stack);
-    console.log("error 1")
+    
   }
 
 });
 
 app.get('/greeted', async function (req, res) {
   var names = await greetings.getName()
- // console.log(names + "zxcvbnasdfghdfg")
+  // console.log(names + "zxcvbnasdfghdfg")
   res.render('greeted', {
     name: names
 
@@ -145,57 +152,22 @@ app.get('/greeted', async function (req, res) {
 
 
 
-app.get('/counter/:username', async function (req, res) {
+app.get('/counter/:name', async function (req, res) {
 
+  const { name } = req.params
 
-  try {
+  var count = await greetings.getCountForUser(name);
+  console.log(count);
 
-    var userParams = await greetings.getName(req.params.username)
-    // const user = req.params.userName;
-
-          var actionLists2 =   greetings.actions(actionType)
-    var finalMsg = "{{name}] has been greeted {{count}},  ";
-
-    res.render('counter', { userParams, finalMsg })
-
-  }
-  catch (error) {
-      console.log(error.name);
-     console.log(error.message);
-      console.log(error.stack);
-
-  }
+  res.render('counter',
+    { name, count }
+  )
 
 });
 
-//      const greets = req.body.language ;
-//     const userName = req.body.userName;
-//      const timeOfGreets = req.body.timeOfGreets;
-//   // var greetingPerson = await greetings.enterName(userName)
-// //   //  await greetings.getName();
 
 
-// //     let greet = {
-// //       names: await greetings.language(greets, userName),
-// //       count: await greetings.overallCounter()
 
-// //     }
-//    await greetings.getName()
-//      res.render("index", {
-//       greet,
-//        userName,
-// //       timeOfGreets
-// //       //greet
-
-// //     });
-
-//   } catch (error) {
-//     console.log(error.name);
-//     console.log(error.message);
-//     console.log(error.stack);
-//     //console.log("error 1") 
-//     //next(error)
-//   }
 
 
 
@@ -206,121 +178,3 @@ app.listen(PORT, function () {
   console.log("app started at port:", PORT);
 
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//# 1 
-//  else {
-
-  //   function validate(value, result) {
-  //     if (!value) {
-  //       return result;
-  //     }
-  //     return {};
-
-
-  // const daysInvalid = validate(greets, {
-  //   style: "is-invalid",
-  //   message: "Enter a valid number og greets"
-  // });
-
-  // const kittenNameInvalid = validate(name, {
-  //   style: "is-invalid",
-  //   message: "Enter a valid name"
-  // });
-
-  // const arrivingOnInvalid = validate(arrivingOn, {
-  //   style: "is-invalid",
-  //   message: "Please select correct Time"
-  // });
-  // const greetedNames = await pool.query('select id, name, staying_for as days, arriving_on as "arrivingOn" from booking');
-  // const greetedNames = await pool.query('select id, name, number_of_greetings as greets, time_of_greets as "timeOfGreets" from greetings');
-
-  //2
-
-
-//});
-  // }
-
-
-
-  //local 
-
-  // render new created template actions.handlebars, send something in (second parameter)
-  // res.render("greets", { greets: greetLists });
-
-
-
-// // // another route, the Action route
-// app.post("/greets",function (req, res) {
-
-//    // capture the type to add
-//   console.log();
-
-// //   //want to send the call and sms to my factort function
-//    greet.setName(req.body.greets);
-
-// //   // redirect to the home /first route for now once done
-//    res.redirect("/");
-
-// });
-
-
-// function setAll() {
-
-//   greetings.setName({
-//     names: req.body.callCost
-//   });
-
-//   greetings.language({
-//     language: req.body.
-
-//  });
-
-//   greetings.counter(){
-//     counter: req.body.
-
-//  };
-
-
-//   return {
-
-
-//   }
-// }
-
-// setAll();
-//   smsCost: req.body.smsCost,
-//   warningLevel: req.body.warningLevel,
-//   criticalLevel: req.body.criticalLevel
-
-
-// // when we send to the server our request will be available in the body so...req.body
-// console.log(settingsBill.getSettings());
-
-// redirect to the home /first route for now
-
-
-
-// ivaya yodwa
-    // take it out ,no longer using local variable, or your local , now pushing data to the the database 
-    // kittens.push({
-    // 	id : kittens.length+1,
-    // 	days,
-    // 	name,
-    // 	arrivingOn
-    // });

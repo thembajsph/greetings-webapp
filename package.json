@@ -1,7 +1,6 @@
 {
   "name": "greetings-webapp",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "directories": {
     "test": "test"
@@ -22,5 +21,14 @@
   },
   "keywords": [],
   "author": "thembajsph",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thembajsph/greetings-webapp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/thembajsph/greetings-webapp/issues"
+  },
+  "homepage": "https://github.com/thembajsph/greetings-webapp#readme",
+  "description": ""
 }

@@ -17,61 +17,62 @@
 
 <div class="radiobuttonrow col-3 center ">
 
-    <span>
-        <label for="">Isixhosa</label>
+    <label>
+        <span for="">Isixhosa</span>
         <input type="radio" name="language" class="selectRadio" value="Isixhosa">
-    </span>
-    <span>
-        <label for="">English</label>
+    </label>
+    <label>
+        <span for="">English</span>
         <input type="radio" name="language" class="selectRadio" value="English">
-    </span>
-    <span>
-        <label for="">Afrikaans</label>
+    </label>
+    <label>
+        <span for="">Afrikaans</span>
         <input type="radio" name="language" class="selectRadio" value="Afrikaans">
-    </span>
+    </label>
+
     <span>
         <!--label for="">counter</label-->
-        <p class="counter center " value="{{greetings.counter}}" onload="myScript"></p>
+        <p class="counter center greetingsMsg" value="{{greetings.counter}}" onload="myScript"></p>
     </span>
 
 </div>
-<div>
-
 
 </div>
 
+<div class="greetingsMsg center">
 
-<div class="greetingsBtn row col-3 center ">
-
-    <button class="greetMeBtn" type="submit" name="button">Greet me!</button>
     {{greet.names}}
 </div>
 
-<div class="message row col-3 center " id="alarmmsg">
-    {{message.info}}
+
+
+<div class="greetingsBtn row col-3 center ">
+    <span>
+        <button class="greetMeBtn center" type="submit" name="button">Greet me!</button>
+    </span>
+
+    <span>
+        <button class="textClear center" type="submit" onclick="resetAndClear();" name="button">Reset!</button>
+    </span>
 
 </div>
 
 
-<div class="entry center">
-    <h1> {{message.info}}</h1>
+{{!-- <div class="message row col-3 center " id="alarmmsg">
+    {{messages.info}}
+
+</div> --}}
+
+
+<div class="entry row col-3 center">
+    <h4 class="entry">{{messages.info}}</h4>
 </div>
 
-{{!-- <div> --}}
- {{!-- <a href="/greeted"  class="btn center justify " >greeted names</a> --}}
-{{!-- </div> --}}
-{{!-- buttom to be a link to lead to the greets table page with all the greeted people score --}}
-{{!-- <a href="/actions/call">Call total</a>
-<button class="textClear" type="submit" onclick="clearTexo();" name="button">Greeted Tally!</button> --}}
-{{!-- <a href="/greets" class="btn">Greeted Tally!</a> --}}
+
 </form>
 
-
-<div>
-    {{!-- <button class="counterClear" type="submit" name="button">clear Counter!</button>
-    <button class="textClear" type="submit" onclick="clearTexo();" name="button">reset Name!</button> --}}
-</div>
- <a href="/greets" class="button center justify ">Greetings Tally!</a> 
- <a href="/greeted"  class="btn center justify " >greeted names</a>
-{{!-- will need a table fo my greets page here --}}
-{{!-- <a href="/greets" class="btn">Greeted Tally!</a> --}}
+{{!-- <div>
+      <button class="counterClear" type="submit" name="button">clear Counter!</button>
+   
+</div> --}}
+<a href="/greeted" class="btn center justify ">greeted names</a>

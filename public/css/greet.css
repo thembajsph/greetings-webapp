@@ -35,6 +35,7 @@ a.button {
     color: initial;
     
 }
+
 a.btn {
     -webkit-appearance: button;
     -moz-appearance: button;
@@ -42,5 +43,60 @@ a.btn {
 
     text-decoration: none;
     color: initial;
+
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+
     
 }
+
+h1 {
+    font-family: "Arial Black", sans-serif;
+    font-size: 4.5em;
+    letter-spacing: -1px;
+    background-color: black;
+    color: white;
+
+  }
+  label {
+      display: inline;
+  }
+
+
+  .greetingsMsg {
+    
+        font-family: Georgia, sans-serif;
+        font-size: 2.5em;
+        letter-spacing: -2px;
+
+  }
+
+  h3 {
+
+    font-family: Georgia, sans-serif;
+    font-size: 2.5em;
+    letter-spacing: -2px;
+
+  }
+
+  li {
+    font-family: Georgia, sans-serif;
+    font-size: 1.5em;
+    letter-spacing: -2px;
+
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+
+
+  }
+  .entry {
+    font-family: Georgia, sans-serif;
+    font-size: 1.3em;
+    letter-spacing: -2px;
+    color: red;
+
+  }
