@@ -18,5 +18,11 @@ create table greetings(
 );
 
 -- sudo -u postgres createdb greetingsWebapp;
--- insert into greetings (name, count , time)
--- values ('Sipho', 1, '2020-09-08 13:05:10+02');
+-- Insert into greetings (name, count , time)
+-- values ('Themba', 3, '2020-09-08 14:05:10+02');
+
+
+-- Insert into greetings (name, count , time)
+--  values ('Themba', 3, '2020-09-08 14:05:10+02');
+
+
