@@ -7,6 +7,10 @@ node_js:
 - node_modules
   before_script:
     npm install
-  - psql -c 'create database  greetings;' -U postgres
+  - psql -c 'create database  greetings-webapp;' -U postgres
   script:
 - npm run test
+
+env:
+  - DATABASE_URL=postgresql://postgres@localhost:5432/greetings-webapp
+
