@@ -7,8 +7,14 @@ node_js:
   - "12"
 
 before_script:
-  - psql -c 'create database  greetings-webapp;' -U postgres
+  - psql -c 'create database  greetingsWebapp;' -U postgres
   - psql -U postgres -d greetings-webapp -a -f tables.sql
 
 services:
   - postgresql
+
+
+
+
+
+

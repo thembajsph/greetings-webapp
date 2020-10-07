@@ -16,3 +16,7 @@ create table greetings(
 	count int,
 	time text
 );
+
+-- sudo -u postgres createdb greetingsWebapp;
+-- insert into greetings (name, count , time)
+-- values ('Sipho', 1, '2020-09-08 13:05:10+02');

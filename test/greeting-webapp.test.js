@@ -4,7 +4,7 @@ describe("The greetings webapp", function () {
 
 	const pg = require("pg");
 	const Pool = pg.Pool;
-	const connectionString = process.env.DATABASE_URL || 'postgresql://thembajoseph:themba17307@localhost:5432/greetings-webapp';
+	const connectionString = process.env.DATABASE_URL || 'postgresql://thembajoseph:themba17307@localhost:5432/greetingsWebapp';
 	const pool = new Pool({
 		connectionString
 	});
