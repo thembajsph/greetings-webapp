@@ -1,14 +1,14 @@
 language: node_js
-node_js:
-  - 12
-  services:
-  - postgresql
-  before_script:
-    npm install
-  - psql -c 'create database  greetings-webapp;' -U postgres
-  script:
-- npm run test
 
 env:
   - DATABASE_URL=postgresql://postgres@localhost:5432/greetings-webapp
 
+node_js:  
+  - "12
+
+before_script:
+  - psql -c 'create database  greetings-webapp;' -U postgres
+  - psql -U postgres -d greetings-webapp -a -f tables.sql
+
+services:
+  - postgresql
