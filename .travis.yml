@@ -4,7 +4,7 @@ env:
   - DATABASE_URL=postgresql://postgres@localhost:5432/greetings-webapp
 
 node_js:  
-  - "12
+  - "12"
 
 before_script:
   - psql -c 'create database  greetings-webapp;' -U postgres
