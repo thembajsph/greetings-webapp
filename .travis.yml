@@ -8,7 +8,7 @@ node_js:
 
 before_script:
   - psql -c 'create database  greetingsWebapp;' -U postgres
-  - psql -U postgres -d greetingsWebapp -a -f tables.sql
+  - psql -U postgres -d greetingsWebapp -a -f greetings.sql
 
 services:
   - postgresql

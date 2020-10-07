@@ -113,57 +113,6 @@ module.exports = function greet(pool) {
     return restart;
   };
 
-//  function presentName() {
-
-
-//   if (!name ) {
-//     await enterName(name)
-//   }
-// else if (lang) {
-
-//   await language(name)
-// }
-
-
-
-
-
-
-
-
-//  
-
-
-
-
-
-
-
-
-
-
-
-
-
-  // async function resetAndClear() {
-
-  //   let allQuery = await pool.query('SELECT * FROM greeting');
-
-  //   //instance.counter();
-  //   await getCountForUser()
-  //   // var a = 0;
-
-  //   var buttonpressed = false;
-
-  //   if (!buttonpressed && allQuery) { // Check if the localStorage object exists
-  //     await resetFtn();
-  //     //   window.localStorage.clear()  //clears the localstorage
-  //     // instance.clear();
-  //     await location.reload();
-
-  //   }
-
-//  };
 
   return {
     clear,
@@ -176,9 +125,6 @@ module.exports = function greet(pool) {
     existDbAndCount,
     getCountForUser,
     resetFtn,
-
-    
-   // resetAndClear
 
 
   };
@@ -215,3 +161,39 @@ module.exports = function greet(pool) {
   // if (!greetedNames.includes(name)) {
   //   greetedNames.push(name)
   // }
+
+
+  //  function presentName() {
+
+
+//   if (!name ) {
+//     await enterName(name)
+//   }
+// else if (lang) {
+
+//   await language(name)
+// }
+
+
+//  
+
+  // async function resetAndClear() {
+
+  //   let allQuery = await pool.query('SELECT * FROM greeting');
+
+  //   //instance.counter();
+  //   await getCountForUser()
+  //   // var a = 0;
+
+  //   var buttonpressed = false;
+
+  //   if (!buttonpressed && allQuery) { // Check if the localStorage object exists
+  //     await resetFtn();
+  //     //   window.localStorage.clear()  //clears the localstorage
+  //     // instance.clear();
+  //     await location.reload();
+
+  //   }
+
+//  };
+  // resetAndClear
