@@ -1,3 +1,5 @@
+const { lang } = require("moment");
+
 module.exports = function greet(pool) {
 
   var greetedNames = [];
@@ -27,12 +29,12 @@ module.exports = function greet(pool) {
     const isAdded = await getCountForUser(name) > 0;
     if (isAdded) {
       await pool.query('UPDATE greetings SET count = count + 1 WHERE name = $1', [name]);
-      return;
+      
     }
 
     await pool.query('INSERT INTO greetings (name, count) values($1,$2)', [name, 1])
   };
-
+// if  (name)
 
   async function existDbAndCount(name) {
     try {
@@ -52,6 +54,11 @@ module.exports = function greet(pool) {
 
     let check = await existDbAndCount(name);
     console.log(check);
+    if (name !== "") {
+
+
+  await overallCounter()
+  
     if (check.rows === 0) {
 
       await enterName(name)
@@ -66,7 +73,7 @@ module.exports = function greet(pool) {
     else if (lang === "Afrikaans") {
       return "Hallo, " + name + " !"
     }
-
+  }
   }
 
   async function getName() {
@@ -79,8 +86,8 @@ module.exports = function greet(pool) {
 
   async function overallCounter() {
     let count = await pool.query('SELECT id FROM greetings');
-    console.log(count.rowCount);
-    return count.rowCount;
+    
+      return count.rowCount;
   }
 
   function hasNumbers(name) {
@@ -97,7 +104,7 @@ module.exports = function greet(pool) {
       return selectQuery.rows[0].count;
     }
 
-    return 0;
+    //return 0;
   }
 
   async function resetFtn() {
@@ -106,26 +113,57 @@ module.exports = function greet(pool) {
     return restart;
   };
 
+//  function presentName() {
 
-  async function resetAndClear() {
 
-    let allQuery = await pool.query('SELECT * FROM greeting');
+//   if (!name ) {
+//     await enterName(name)
+//   }
+// else if (lang) {
 
-    //instance.counter();
-    await getCountForUser()
-    // var a = 0;
+//   await language(name)
+// }
 
-    var buttonpressed = false;
 
-    if (!buttonpressed && allQuery) { // Check if the localStorage object exists
-      await resetFtn();
-      //   window.localStorage.clear()  //clears the localstorage
-      // instance.clear();
-      await location.reload();
 
-    }
 
-  };
+
+
+
+
+//  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  // async function resetAndClear() {
+
+  //   let allQuery = await pool.query('SELECT * FROM greeting');
+
+  //   //instance.counter();
+  //   await getCountForUser()
+  //   // var a = 0;
+
+  //   var buttonpressed = false;
+
+  //   if (!buttonpressed && allQuery) { // Check if the localStorage object exists
+  //     await resetFtn();
+  //     //   window.localStorage.clear()  //clears the localstorage
+  //     // instance.clear();
+  //     await location.reload();
+
+  //   }
+
+//  };
 
   return {
     clear,
@@ -138,7 +176,9 @@ module.exports = function greet(pool) {
     existDbAndCount,
     getCountForUser,
     resetFtn,
-    resetAndClear
+
+    
+   // resetAndClear
 
 
   };

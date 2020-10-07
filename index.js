@@ -73,22 +73,25 @@ app.get("/", async function (req, res) {
 
 
   //flash warning message
-  req.flash('info', );
-  
-// 'Flash Message Added'
-  let greet = {
-    count: await greetings.overallCounter()
-  };
+  req.flash('info',);
+
 
   const greetedNames = await pool.query('select id, name,count as greets, time as "timeOfGreets" from greetings');
 
+    let counterVal = await greetings.overallCounter()
 
+  let greet = {
+    count: counterVal
+  }
   // put it again the settingsbill data on screen , render it on second parameter:
   res.render("index", {
-    greet,
+    
     // timeOfGreets,
-    names: await greetedNames.rows, title: "Home"
+    names: await greetedNames.rows, title: "Home",
+    greet
   });
+  
+  
 });
 
 
@@ -102,28 +105,40 @@ app.post("/greetings", async function (req, res) {
 
     const greets = req.body.language;
     var userName = req.body.userName;
-   // const time = req.body.time;
+    // const time = req.body.time;
     //  var greetingPerson = await greetings.enterName(userName)
 
     //  await greetings.getName();
-    if(!(greets && userName))  {
+    if (!(greets && userName)) {
+
+      // keeping div blank
+
+      //  document.getElementById("textfield2").value = "";
+      // await greetings.language() = ""
+
       req.flash("info", "do enter your name and select a language")
-    }else if (!userName) {
+    } else if (!userName) {
       req.flash("info", "enter your name")
-    }else if (!greets) {
-        req.flash("info", "select a lang!")
-      }
-      // else if (lang === "Afrikaans") {
-      //   req.flash = "sleutel, jou naam asseblief" + name + " !"
-      // }
-    
-    greetings.enterName(userName)
+    } else if (!greets) {
+      req.flash("info", "select a language!")
+    }
+    // else if (lang === "Afrikaans") {
+    //   req.flash = "sleutel, jou naam asseblief" + name + " !"
+    // }
+
+    if(userName){
+      await greetings.enterName(userName)
+
+    }
+
 
     let greet = {
+
       names: await greetings.language(greets, userName),
       count: await greetings.overallCounter()
 
     }
+
     await greetings.getName()
     res.render("index", {
       greet
@@ -136,7 +151,7 @@ app.post("/greetings", async function (req, res) {
     console.log(error.name);
     console.log(error.message);
     console.log(error.stack);
-    
+
   }
 
 });
@@ -157,11 +172,19 @@ app.get('/counter/:name', async function (req, res) {
   const { name } = req.params
 
   var count = await greetings.getCountForUser(name);
-  console.log(count);
+ // console.log(count);
 
   res.render('counter',
     { name, count }
   )
+
+});
+
+app.get("/reset", async function (req, res) {
+
+await greetings.resetFtn()
+
+res.redirect("/")
 
 });
 
