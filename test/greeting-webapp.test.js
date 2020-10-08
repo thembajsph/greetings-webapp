@@ -4,10 +4,13 @@ describe("The greetings webapp", function () {
 
 	const pg = require("pg");
 	const Pool = pg.Pool;
-	const connectionString = process.env.DATABASE_URL || 'postgresql://thembajoseph:themba17307@localhost:5432/greetingsWebapp_tests';
+	const connectionString = process.env.DATABASE_URL || 'postgres@localhost:5432/greetingsWebapp_tests';
 	const pool = new Pool({
 		connectionString
 	});
+	// - DATABASE_URL=postgresql://postgres@localhost:5432/my_products_tests
+
+
 
 	// insert query to look into
 	const INSERT_QUERY = 'INSERT INTO greetings (name, count) values($1,$2)'
