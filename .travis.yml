@@ -1,7 +1,7 @@
 language: node_js
 
 env:
-  - DATABASE_URL=postgresql://thembajoseph:themba17307@localhost:5432/greetings_tests
+  - DATABASE_URL=postgresql://postgres@localhost:5432/greetings_tests
 
 node_js:  
   - "12.19.0"
