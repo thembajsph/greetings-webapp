@@ -27,14 +27,18 @@ module.exports = function greet(pool) {
 
   async function enterName(name) {
     const isAdded = await getCountForUser(name) > 0;
+
+    // console.log(isAdded);
+
     if (isAdded) {
       await pool.query('UPDATE greetings SET count = count + 1 WHERE name = $1', [name]);
       
+      return isAdded;
     }
 
     await pool.query('INSERT INTO greetings (name, count) values($1,$2)', [name, 1])
   };
-// if  (name)
+  // if  (name)
 
   async function existDbAndCount(name) {
     try {
@@ -46,7 +50,7 @@ module.exports = function greet(pool) {
       console.log(error.message)
       console.log(error.stack)
     }
-  
+
   }
 
   async function language(lang, name) {
@@ -57,23 +61,25 @@ module.exports = function greet(pool) {
     if (name !== "") {
 
 
-  await overallCounter()
-  
-    if (check.rows === 0) {
+      await overallCounter()
 
-      await enterName(name)
+      if (check.rows === 0) {
+
+        await enterName(name)
+      }
+      // await setTimer()
+
+      // await updateCount(name)
+      if (lang === "Isixhosa") {
+        return "Molo, " + name + " !"
+      }
+      else if (lang === "English") {
+        return "Hello, " + name + " !"
+      }
+      else if (lang === "Afrikaans") {
+        return "Hallo, " + name + " !"
+      }
     }
-    // await updateCount(name)
-    if (lang === "Isixhosa") {
-      return "Molo, " + name + " !"
-    }
-    else if (lang === "English") {
-      return "Hello, " + name + " !"
-    }
-    else if (lang === "Afrikaans") {
-      return "Hallo, " + name + " !"
-    }
-  }
   }
 
   async function getName() {
@@ -86,8 +92,8 @@ module.exports = function greet(pool) {
 
   async function overallCounter() {
     let count = await pool.query('SELECT id FROM greetings');
-    
-      return count.rowCount;
+
+    return count.rowCount;
   }
 
   function hasNumbers(name) {
@@ -99,6 +105,8 @@ module.exports = function greet(pool) {
 
 
   const getCountForUser = async (name) => {
+
+
     let selectQuery = await pool.query('SELECT count FROM greetings WHERE name = $1 ', [name]);
     if (selectQuery.rows[0] && selectQuery.rows[0].count) {
       return selectQuery.rows[0].count;
@@ -107,11 +115,13 @@ module.exports = function greet(pool) {
     //return 0;
   }
 
+
   async function resetFtn() {
 
     let restart = await pool.query('DELETE FROM greetings ');
     return restart;
   };
+
 
 
   return {
@@ -125,7 +135,7 @@ module.exports = function greet(pool) {
     existDbAndCount,
     getCountForUser,
     resetFtn,
-
+    // setTimer
 
   };
 
@@ -197,3 +207,9 @@ module.exports = function greet(pool) {
 
 //  };
   // resetAndClear
+
+  // function setTimer() {
+
+  //   document.getElementById("alarmmsg").innerHTML = "";
+  //   setTimeout("setTimer()", 10000);
+  // }

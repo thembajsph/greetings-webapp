@@ -1,4 +1,12 @@
-<div class="container">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container">
 
     <div class="row center">
         <h1>greetings</h1>
@@ -51,9 +59,10 @@
         <button class="greetMeBtn center" type="submit" name="button">Greet me!</button>
     </span>
 
-</form>
+    </form>
     <span>
-       <a href="/reset"> <button class="textClear center" type="submit" onclick="resetAndClear();" name="button">Reset!</button> </a>
+        <a href="/reset"> <button class="textClear center" type="submit" onclick="resetAndClear();"
+                name="button">Reset!</button> </a>
     </span>
 
 </div>
@@ -75,3 +84,22 @@
    
 </div> --}}
 <a href="/greeted" class="btn center justify ">greeted names</a>
+
+</body>
+<script> 
+     {{!-- function setTimer() {
+
+        document.querySelector(".entry").innerHTML = "";
+        setTimeout("setTimer()", 3000);
+    }  --}}
+
+setTimeout(function(){
+    document.querySelector(".entry").innerHTML = "";
+}, 3000);
+
+
+
+
+
+</script>
+</html>

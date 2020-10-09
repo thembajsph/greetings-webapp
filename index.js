@@ -157,8 +157,17 @@ app.post("/greetings", async function (req, res) {
 });
 
 app.get('/greeted', async function (req, res) {
+
+  const newName = req.params.userName;
+
   var names = await greetings.getName()
   // console.log(names + "zxcvbnasdfghdfg")
+  if (newName != null) {
+
+    await greetings.enterName(newName)
+
+  }
+
   res.render('greeted', {
     name: names
 
