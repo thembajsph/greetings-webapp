@@ -135,11 +135,12 @@ module.exports = function greet(pool) {
     existDbAndCount,
     getCountForUser,
     resetFtn,
-    // setTimer
+     //setTimer
 
   };
 
 };
+//npx eslint greetings.js
 
 
 // function errorFlash(name) {

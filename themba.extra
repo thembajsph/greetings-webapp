@@ -15,55 +15,48 @@ describe("The greetings webapp", function () {
 
 	// insert query to look into
 	const INSERT_QUERY = 'INSERT INTO greetings (name, count) values($1,$2)'
-
+	
 
 	beforeEach(async function () {
 		await pool.query("delete from greetings");
 	});
 
-// ### functions tests
-
 	it("should be able to add a greetings", async function () {
 
-		let instance = greetings(pool);
+		let greets = greetings(pool);
 
-		await instance.enterName("Themba");
-		await instance.enterName("Sipho");
-		await instance.enterName("Tello");
+		await greets.enterName("Themba");
+		await greets.enterName("Sipho");
+		await greets.enterName("Tello");
 
-		assert.deepEqual[{ name: "Themba" }, { name: "Sipho" }, { name: "Tello" }], await instance.
-			getName();
-
+		assert.deepEqual[{name: "Themba" } , { name: "Sipho" } , {name: "Tello" }], await greets.
+		getName();
+	
 	});
 
 
+		// await pool.query(INSERT_QUERY, ["Themba", 1]);
+		// await pool.query(INSERT_QUERY, ["Sipho", 3, ]);
 
-	it("should be able set the name of the user and get counter", async function () {
-		let instance = greetings(pool);
+		//const results = await pool.query("select count(*) from greetings");
+		
+		// how many bookings should have been added?
+	// 	assert.equal(2, results.rows[0].count);
 
-		await instance.enterName("Themba");
+	// });
 
-		assert.equal(await instance.overallCounter(), 1);
+	it("should be able to find all greetings", async function () {
 
+		await pool.query(INSERT_QUERY, ["Mahlatsi", 4]);
+		await pool.query(INSERT_QUERY, ["Thando", 3]);
+		await pool.query(INSERT_QUERY, ["Tau", 7]);
+
+		const results = await pool.query("select count(*) from greetings");
+
+		// how many bookings should be found?
+		assert.equal(3, results.rows[0].count);
+		
 	});
-
-
-	it("should be able take in a different language and return message", async function () {
-		let instance = greetings(pool);
-
-
-		var message = await instance.language("Isixhosa", "Themba");
-		var message2 = await instance.language("English", "Themba");
-		var message3 = await instance.language("Afrikaans", "Sipho");
-
-
-		assert.equal(message, "Molo, Themba" + " !");
-		assert.equal(message2, "Hello, Themba" + " !");
-		assert.equal(message3, "Hallo, Sipho" + " !");
-
-
-	});
-
 
 	it("should be able to find a greet", async function () {
 
@@ -77,8 +70,6 @@ describe("The greetings webapp", function () {
 		//assert.equal("Thursday", results.rows[0].arriving_on);
 
 	});
-
-// ###               query tests
 
 	it("should be able to update greetings", async function () {
 
@@ -97,7 +88,7 @@ describe("The greetings webapp", function () {
 		// what new values should have been found
 		assert.equal("Pedro", results.rows[0].name);
 		assert.equal(5, results.rows[0].count);
-
+		
 
 	});
 
@@ -112,93 +103,14 @@ describe("The greetings webapp", function () {
 
 		// how many bookings should be found?
 		assert.equal(2, results.rows[0].count);
-
+		
 	});
 
-	after(function () {
+	after(function() {
 		pool.end();
 	})
 
 });
-
-
-
-
-
-
-
-
-
-// await pool.query(INSERT_QUERY, ["Themba", 1]);
-	// await pool.query(INSERT_QUERY, ["Sipho", 3, ]);
-
-	//const results = await pool.query("select count(*) from greetings");
-
-	// how many bookings should have been added?
-	// 	assert.equal(2, results.rows[0].count);
-
-	// });
-
-	// it("should be able to find all greetings", async function () {
-
-	// 	let instance = greetings();
-
-	// 	//names: await greetings.language(greets, userName),
-
-
-
-	// 	await instance.language("Isixhosa", "Themba");
-	// 	await instance.language("English", "Sipho");
-	// 	await instance.language("Afrikaans", "Tello");
-
-
-	// 	var lang = "Isixhosa";
-	// 	var name = "Themba";
-
-	// 	assert.equal(await instance.language(lang, name), 'Molo, Themba');
-
-
-
-
-
-	// await pool.query(INSERT_QUERY, ["Mahlatsi", 4]);
-	// await pool.query(INSERT_QUERY, ["Thando", 3]);
-	// await pool.query(INSERT_QUERY, ["Tau", 7]);
-
-	// const results = await pool.query("select count(*) from greetings");
-
-	// how many bookings should be found?
-	//assert.equal(3, results.rows[0].count);
-
-
-	// });
-
-
-	// it("should be able get the name of the user", async function () {
-	// 	let instance = greetings(pool);
-
-	// 	await instance.enterName("Themba")
-	// 	await instance.enterName("Tello")
-	// 	await instance.enterName("Mahlatsi")
-
-	// 	assert.deepEqual(["Themba", "Tello", "Mahlatsi"], await instance.getName());
-
-	// });
-
-
-// it("should be able count the number of people greeted", async function () {
-	// 	let instance = greetings();
-
-	// 	await instance.enterName("Sipho");
-	// 	await instance.enterName("Thabiso");
-	// 	await instance.enterName("Tello");
-
-    // let count = await pool.query('SELECT id FROM greetings');
-	// assert.deepEqual( await instance.getCountForUser(), 3);
-
-
-	// });
-
 
 // -- sudo -u postgres createdb greetingsWebapp;
 // -- Insert into greetings (name, count , time)
@@ -218,12 +130,3 @@ describe("The greetings webapp", function () {
 // --  28 |          |                   1 | 2020-09-09 12:47:10.171+02
 // --  29 |          |                   1 | 2020-09-09 12:47:59.534+02
 // -- (29 rows)
-
-
-
-
-// });
-
-
-
-

@@ -1,105 +1,107 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body>
     <div class="container">
 
-    <div class="row center">
-        <h1>greetings</h1>
-        <form action="/greetings" method="POST">
+        <div class="row center">
+            <h1>greetings</h1>
+            <form action="/greetings" method="POST">
+        </div>
+        {{greet.count}}
+        <div class="row col-3 center">
+
+            <label for="">Name</label>
+            <input type="text" id="textfield2" name="userName" value="{{greetings.getName}}"
+                placeholder="enter your name..." class="enterName">
+
+        </div>
     </div>
-    {{greet.count}}
-    <div class="row col-3 center">
+    </div>
 
-        <label for="">Name</label>
-        <input type="text" id="textfield2" name="userName" value="{{greetings.getName}}"
-            placeholder="enter your name..." class="enterName">
+    <div class="radiobuttonrow col-3 center ">
+
+        <label>
+            <span for="">Isixhosa</span>
+            <input type="radio" name="language" class="selectRadio" value="Isixhosa">
+        </label>
+        <label>
+            <span for="">English</span>
+            <input type="radio" name="language" class="selectRadio" value="English">
+        </label>
+        <label>
+            <span for="">Afrikaans</span>
+            <input type="radio" name="language" class="selectRadio" value="Afrikaans">
+        </label>
+
+        <span>
+            <!--label for="">counter</label-->
+            <p class="counter center greetingsMsg" value="{{greetings.counter}}" onload="myScript"></p>
+        </span>
 
     </div>
-</div>
-</div>
 
-<div class="radiobuttonrow col-3 center ">
+    </div>
 
-    <label>
-        <span for="">Isixhosa</span>
-        <input type="radio" name="language" class="selectRadio" value="Isixhosa">
-    </label>
-    <label>
-        <span for="">English</span>
-        <input type="radio" name="language" class="selectRadio" value="English">
-    </label>
-    <label>
-        <span for="">Afrikaans</span>
-        <input type="radio" name="language" class="selectRadio" value="Afrikaans">
-    </label>
+    <div class="greetingsMsg center" id="textfield2">
 
-    <span>
-        <!--label for="">counter</label-->
-        <p class="counter center greetingsMsg" value="{{greetings.counter}}" onload="myScript"></p>
-    </span>
-
-</div>
-
-</div>
-
-<div class="greetingsMsg center" id="textfield2">
-
-    {{greet.names}}
-</div>
+        {{greet.names}}
+    </div>
 
 
 
-<div class="greetingsBtn row col-3 center ">
-    <span>
-        <button class="greetMeBtn center" type="submit" name="button">Greet me!</button>
-    </span>
+    <div class="greetingsBtn row col-3 center">
+        <span>
+            <button class="greetMeBtn center" type="submit" name="button">Greet me!</button>
+        </span>
 
-    </form>
-    <span>
-        <a href="/reset"> <button class="textClear center" type="submit" onclick="resetAndClear();"
-                name="button">Reset!</button> </a>
-    </span>
+        </form>
+        <span>
+            <a href="/reset"> <button class="textClear center" type="submit" onclick="resetAndClear();"
+                    name="button">Reset!</button> </a>
+        </span>
+        
+ <a href="/greeted" class="btn center justify ">greeted names</a>
+    </div>
+   
 
-</div>
 
-
-{{!-- <div class="message row col-3 center " id="alarmmsg">
+    {{!-- <div class="message row col-3 center " id="alarmmsg">
     {{messages.info}}
 
 </div> --}}
 
 
-<div class="entry row col-3 center">
-    <h4 class="entry">{{messages.info}}</h4>
-</div>
+    <div class="entry row col-3 center">
+        <h4 class="entry">{{messages.info}}</h4>
+    </div>
 
 
-{{!-- <div>
+    {{!-- <div>
       <button class="counterClear" type="submit" name="button">clear Counter!</button>
    
 </div> --}}
-<a href="/greeted" class="btn center justify ">greeted names</a>
 
 </body>
-<script> 
-     {{!-- function setTimer() {
+<script>
 
+
+    setTimeout(function () {
+        document.querySelector(".greetingsMsg").innerHTML = "";
         document.querySelector(".entry").innerHTML = "";
-        setTimeout("setTimer()", 3000);
-    }  --}}
 
-setTimeout(function(){
-    document.querySelector(".entry").innerHTML = "";
-}, 3000);
+    }, 3000);
 
 
 
 
 
 </script>
+
 </html>
