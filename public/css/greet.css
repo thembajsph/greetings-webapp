@@ -15,15 +15,15 @@ body {
     color:red;
 }
 .counterClear {
-    background-color: #f44336;
+    background-color: #f12d1f;
 } /* Red */
 
 .textClear {
-    background-color: #4CAF50;
+    background-color: #08ff10;
 } /* Green */
 
 .greetMeBtn {
-    background-color: #008CBA;
+    background-color: #008bb9;
 } /* Blue */
 
 a.button {
@@ -100,3 +100,6 @@ h1 {
     color: red;
 
   }
+  .back {
+    margin-top: 3em;
+}

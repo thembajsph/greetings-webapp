@@ -32,7 +32,7 @@ module.exports = function greet(pool) {
 
     if (isAdded) {
       await pool.query('UPDATE greetings SET count = count + 1 WHERE name = $1', [name]);
-      
+
       return isAdded;
     }
 
@@ -54,7 +54,7 @@ module.exports = function greet(pool) {
   }
 
   async function language(lang, name) {
-    //var rowCount = table.rows.length;
+
 
     let check = await existDbAndCount(name);
     console.log(check);
@@ -67,9 +67,8 @@ module.exports = function greet(pool) {
 
         await enterName(name)
       }
-      // await setTimer()
 
-      // await updateCount(name)
+
       if (lang === "Isixhosa") {
         return "Molo, " + name + " !"
       }
@@ -88,7 +87,7 @@ module.exports = function greet(pool) {
     return names.rows;
   }
 
-  //must used what we have in local storage(key value pairs in storage) object in storage .
+
 
   async function overallCounter() {
     let count = await pool.query('SELECT id FROM greetings');
@@ -108,6 +107,7 @@ module.exports = function greet(pool) {
 
 
     let selectQuery = await pool.query('SELECT count FROM greetings WHERE name = $1 ', [name]);
+
     if (selectQuery.rows[0] && selectQuery.rows[0].count) {
       return selectQuery.rows[0].count;
     }
@@ -115,14 +115,11 @@ module.exports = function greet(pool) {
     //return 0;
   }
 
-
   async function resetFtn() {
 
     let restart = await pool.query('DELETE FROM greetings ');
     return restart;
   };
-
-
 
   return {
     clear,
@@ -135,11 +132,19 @@ module.exports = function greet(pool) {
     existDbAndCount,
     getCountForUser,
     resetFtn,
-     //setTimer
+
 
   };
 
 };
+
+
+
+
+
+
+
+
 //npx eslint greetings.js
 
 

@@ -10,8 +10,10 @@
 <body>
     <div class="container">
 
+
+
         <div class="row center">
-            <h1>greetings</h1>
+            <h1>GREETINGS</h1>
             <form action="/greetings" method="POST">
         </div>
         {{greet.count}}
@@ -21,15 +23,22 @@
             <input type="text" id="textfield2" name="userName" value="{{greetings.getName}}"
                 placeholder="enter your name..." class="enterName">
 
+
         </div>
+        <div class="center">
+            <!--label for="">counter</label-->
+            <p class="counter center greetingsMsg" value="{{greetings.counter}}" onload="myScript"></p>
+        </div>
+
+
     </div>
     </div>
 
-    <div class="radiobuttonrow col-3 center ">
+    <div class="radiobutton row col-3 center ">
 
         <label>
             <span for="">Isixhosa</span>
-            <input type="radio" name="language" class="selectRadio" value="Isixhosa">
+            <input type="radio" name="language" class="selectRadio" value="Isixhosa" checked>
         </label>
         <label>
             <span for="">English</span>
@@ -40,10 +49,6 @@
             <input type="radio" name="language" class="selectRadio" value="Afrikaans">
         </label>
 
-        <span>
-            <!--label for="">counter</label-->
-            <p class="counter center greetingsMsg" value="{{greetings.counter}}" onload="myScript"></p>
-        </span>
 
     </div>
 
@@ -66,10 +71,10 @@
             <a href="/reset"> <button class="textClear center" type="submit" onclick="resetAndClear();"
                     name="button">Reset!</button> </a>
         </span>
-        
- <a href="/greeted" class="btn center justify ">greeted names</a>
+
+        <a href="/greeted" class="btn center justify ">greeted names</a>
     </div>
-   
+
 
 
     {{!-- <div class="message row col-3 center " id="alarmmsg">
@@ -81,7 +86,6 @@
     <div class="entry row col-3 center">
         <h4 class="entry">{{messages.info}}</h4>
     </div>
-
 
     {{!-- <div>
       <button class="counterClear" type="submit" name="button">clear Counter!</button>
@@ -97,10 +101,6 @@
         document.querySelector(".entry").innerHTML = "";
 
     }, 3000);
-
-
-
-
 
 </script>
 

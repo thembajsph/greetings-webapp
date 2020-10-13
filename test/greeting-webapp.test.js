@@ -21,7 +21,7 @@ describe("The greetings webapp", function () {
 		await pool.query("delete from greetings");
 	});
 
-// ### functions tests
+	// ### functions tests
 
 	it("should be able to add a greetings", async function () {
 
@@ -61,9 +61,23 @@ describe("The greetings webapp", function () {
 		assert.equal(message2, "Hello, Themba" + " !");
 		assert.equal(message3, "Hallo, Sipho" + " !");
 
+	});
+
+
+	it("should be able check if no name is updated and return undefined or empty", async function () {
+
+		let instance = greetings();
+
+		await instance.existDbAndCount();
+
+		await instance.setName();
+		await instance.setName();
+
+		assert.equal(await instance.existDbAndCount("Thabiso"), undefined);
 
 	});
 
+	// ###               query tests
 
 	it("should be able to find a greet", async function () {
 
@@ -77,8 +91,6 @@ describe("The greetings webapp", function () {
 		//assert.equal("Thursday", results.rows[0].arriving_on);
 
 	});
-
-// ###               query tests
 
 	it("should be able to update greetings", async function () {
 
@@ -98,9 +110,7 @@ describe("The greetings webapp", function () {
 		assert.equal("Pedro", results.rows[0].name);
 		assert.equal(5, results.rows[0].count);
 
-
 	});
-
 
 	it("should be able to find greetings for 5 counts or longer", async function () {
 

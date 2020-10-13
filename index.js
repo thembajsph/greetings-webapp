@@ -71,10 +71,8 @@ app.get("/", async function (req, res) {
   //install, npm install --save express-handlebars
   // npm install --save body-parser(forms to work)
 
-
   //flash warning message
   req.flash('info',);
-
 
   const greetedNames = await pool.query('select id, name,count as greets, time as "timeOfGreets" from greetings');
 
@@ -84,6 +82,7 @@ app.get("/", async function (req, res) {
     count: counterVal
   }
   // put it again the settingsbill data on screen , render it on second parameter:
+
   res.render("index", {
 
     // timeOfGreets,
@@ -105,26 +104,24 @@ app.post("/greetings", async function (req, res) {
 
     const greets = req.body.language;
     var userName = req.body.userName;
+
     // const time = req.body.time;
     //  var greetingPerson = await greetings.enterName(userName)
 
+
     //  await greetings.getName();
-    if (!(greets && userName)) {
 
-      // keeping div blank
+    // keeping div blank
 
-      //  document.getElementById("textfield2").value = "";
-      // await greetings.language() = ""
-
-      req.flash("info", "do enter your name and select a language")
-    } else if (!userName) {
+    if (!userName) {
       req.flash("info", "enter your name")
-    } else if (!greets) {
-      req.flash("info", "select a language!")
+
     }
-    // else if (lang === "Afrikaans") {
-    //   req.flash = "sleutel, jou naam asseblief" + name + " !"
-    // }
+
+
+
+
+
 
     if (userName) {
       await greetings.enterName(userName)
@@ -174,8 +171,6 @@ app.get('/greeted', async function (req, res) {
   })
 })
 
-
-
 app.get('/counter/:name', async function (req, res) {
 
   const { name } = req.params
@@ -197,10 +192,7 @@ app.get("/reset", async function (req, res) {
 
 });
 
-
-
 const PORT = process.env.PORT || 3013
-
 
 app.listen(PORT, function () {
   console.log("app started at port:", PORT);
