@@ -103,3 +103,13 @@ h1 {
   .back {
     margin-top: 3em;
 }
+/* p { center any div */
+
+
+p{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+
