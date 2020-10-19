@@ -130,3 +130,140 @@ describe("The greetings webapp", function () {
 // --  28 |          |                   1 | 2020-09-09 12:47:10.171+02
 // --  29 |          |                   1 | 2020-09-09 12:47:59.534+02
 // -- (29 rows)
+
+
+
+
+
+  const secondRoute = async function (req, res) {
+
+        try {
+
+            const greets = req.body["language"];
+            // // console.log(greets);
+            var userName = req.body.userName;
+            // console.log(userName);
+            var sameCase = userName.charAt(0).toUpperCase() + userName.slice(1).toLowerCase();
+            var regex = /\d/g;
+            var regex2 = /[!@#$%^&*(),.;-_'"?":{}|<>]-[ A-Za-z]/g;
+
+
+            // keeping div blank
+
+            if (!userName) {
+                req.flash("info", "enter your name")
+
+            }
+
+            if (!sameCase.match(regex) && sameCase.match(regex2)) {
+
+                await greetings.enterName(userName)
+
+                console.log('here');
+                
+
+            }
+            console.log('here now');
+
+            let greet = {
+
+                names: await greetings.language(greets, sameCase),
+                count: await greetings.overallCounter()
+
+            }
+
+            console.log('before rendering');
+
+            console.log(greet)
+
+            // await greetings.getName()
+
+            res.render("index", {
+                greet
+                // timeOfGreets
+                //greet
+
+            });
+
+
+        } catch (error) {
+            console.log(error.name);
+            console.log(error.message);
+            console.log(error.stack);
+
+        }
+
+
+
+
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+	//uchanged
+	 const  secondRoute  = async function(req,res) {
+        
+        try {
+            
+            const greets = req.body["language"];
+            // // console.log(greets);
+            var userName = req.body.userName;
+            // console.log(userName);
+            var sameCase = userName.charAt(0).toUpperCase() + userName.slice(1).toLowerCase();
+            var regex = /\d/g;
+            var regex2 = /[!@#$%^&*(),.;-_'"?":{}|<>]-[ A-Za-z]/g;
+var regex2 = /[!@#$%^&*(),.;-_'"?":{}|<>]-[ A-Za-z]/g;
+
+    // keeping div blank
+
+    if (!userName) {
+      req.flash("info", "enter your name")
+
+    }
+
+    if (!sameCase.match(regex) && sameCase.match(regex2)) {
+
+      await greetings.enterName(userName)
+
+
+      let greet = {
+
+        names: await greetings.language(greets, sameCase),
+        count: await greetings.overallCounter()
+
+      }
+
+      await greetings.getName()
+
+      res.render("index", {
+        greet
+        // timeOfGreets
+        //greet
+
+      });
+
+    
+    }
+
+  } catch (error) {
+    console.log(error.name);
+    console.log(error.message);
+    console.log(error.stack);
+
+  }
+
+
+
+
+
+
+}

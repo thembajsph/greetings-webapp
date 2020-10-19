@@ -2,6 +2,7 @@
 //set up flash for my warning messages
 const flash = require('express-flash');
 const session = require('express-session');
+const routes = require('./routes');
 const greet = require('./greetings')
 const express = require("express");
 const app = express();
@@ -30,7 +31,7 @@ app.use(session({
 app.use(flash());
 
 const greetings = greet(pool);
-
+const routesFact = routes(greetings)
 
 const exphbs = require('express-handlebars');
 
@@ -65,132 +66,20 @@ app.use(bodyParser.json());
 
 
 // get something back on the screen, one route
-app.get("/", async function (req, res) {
-
-  // No default engine was specified and no extension was provided(Error: for me to use render,)
-  //install, npm install --save express-handlebars
-  // npm install --save body-parser(forms to work)
-
-  //flash warning message
-  req.flash('info',);
-
-  const greetedNames = await pool.query('select id, name,count as greets, time as "timeOfGreets" from greetings');
-
-  let counterVal = await greetings.overallCounter()
-
-  let greet = {
-    count: counterVal
-  }
-  // put it again the settingsbill data on screen , render it on second parameter:
-
-  res.render("index", {
-
-    // timeOfGreets,
-    names: await greetedNames.rows, title: "Home",
-    greet
-  });
-
-
-});
-
+app.get("/",  routesFact.username);
 
 // help me set my data on the screen and output on the with my counter and my warning messagem
 
 //settings route that is a post as per instructions
-app.post("/greetings", async function (req, res) {
-
-  //  greetings.setName(req.body.userName)
-  try {
-
-    const greets = req.body.language;
-    var userName = req.body.userName;
-
-    // const time = req.body.time;
-    //  var greetingPerson = await greetings.enterName(userName)
 
 
-    //  await greetings.getName();
+app.post("/greetings",  routesFact.secondRoute);
 
-    // keeping div blank
+app.get('/greeted',  routesFact.thirdRoute);
 
-    if (!userName) {
-      req.flash("info", "enter your name")
+app.get('/counter/:name',  routesFact.forthRoute);
 
-    }
-
-
-
-
-
-
-    if (userName) {
-      await greetings.enterName(userName)
-
-    }
-
-
-    let greet = {
-
-      names: await greetings.language(greets, userName),
-      count: await greetings.overallCounter()
-
-    }
-
-    await greetings.getName()
-    res.render("index", {
-      greet
-      // timeOfGreets
-      //greet
-
-    });
-
-  } catch (error) {
-    console.log(error.name);
-    console.log(error.message);
-    console.log(error.stack);
-
-  }
-
-});
-
-app.get('/greeted', async function (req, res) {
-
-  const newName = req.params.userName;
-
-  var names = await greetings.getName()
-  // console.log(names + "zxcvbnasdfghdfg")
-  if (newName != null) {
-
-    await greetings.enterName(newName)
-
-  }
-
-  res.render('greeted', {
-    name: names
-
-  })
-})
-
-app.get('/counter/:name', async function (req, res) {
-
-  const { name } = req.params
-
-  var count = await greetings.getCountForUser(name);
-  // console.log(count);
-
-  res.render('counter',
-    { name, count }
-  )
-
-});
-
-app.get("/reset", async function (req, res) {
-
-  await greetings.resetFtn()
-
-  res.redirect("/")
-
-});
+app.get("/reset",  routesFact.fifthRoute);
 
 const PORT = process.env.PORT || 3013
 
@@ -198,3 +87,35 @@ app.listen(PORT, function () {
   console.log("app started at port:", PORT);
 
 });
+
+
+
+
+
+// var stringValue = textElem.value;
+    // var userName2 = userNamethemba1730.charAt(0).toUpperCase() + stringValue.slice(1).toLowerCase()
+ // const time = req.body.time;
+    //  var greetingPerson = await greetings.enterName(userName)
+
+
+    //  await greetings.getName();
+
+    // var stringValue = textElem.value;
+  //   var name = stringValue.charAt(0).toUpperCase() + stringValue.slice(1).toLowerCase();
+  //   var numbBack = instance.hasNumbers(name)
+  //   var regex = /\d/g;
+  //   var regex2 = /[!@#$%^&*(),.;-_'"?":{}|<>]-[ A-Za-z]/g;
+
+
+
+  // if (!stringValue.match(regex) && !stringValue.match(regex2)) {
+
+
+  //  greetings.setName(req.body.userName)
+    // !sameCase.match(regex) && !sameCase.match(regex2)
+//var regex = /^[a-zA-Z]+$/
+//console.log(!sameCase.match(regex2))
+//console.log(sameCase)
+      // if (userName) {
+ // console.log(count);
+

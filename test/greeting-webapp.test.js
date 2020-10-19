@@ -1,31 +1,26 @@
 const assert = require("assert");
 const greetings = require("../greetings");
 
-describe("The greetings webapp", function () {
+const pg = require("pg");
+const { reset } = require("nodemon");
+const Pool = pg.Pool;
+const connectionString = process.env.DATABASE_URL || 'postgresql://thembajoseph:themba17307@localhost:5432/greetings_tests';
+const pool = new Pool({
+	connectionString
+});
 
-	const pg = require("pg");
-	const Pool = pg.Pool;
-	const connectionString = process.env.DATABASE_URL || 'postgresql://thembajoseph:themba17307@localhost:5432/greetings_tests';
-	const pool = new Pool({
-		connectionString
-	});
-	// - DATABASE_URL=postgresql://postgres@localhost:5432/my_products_tests
+let instance = greetings(pool);
 
 
-
-	// insert query to look into
-	const INSERT_QUERY = 'INSERT INTO greetings (name, count) values($1,$2)'
+describe("The greetings webapp", async  function () {
 
 
 	beforeEach(async function () {
 		await pool.query("delete from greetings");
 	});
 
-	// ### functions tests
+	it("should be able to add a greet", async function () {
 
-	it("should be able to add a greetings", async function () {
-
-		let instance = greetings(pool);
 
 		await instance.enterName("Themba");
 		await instance.enterName("Sipho");
@@ -36,21 +31,16 @@ describe("The greetings webapp", function () {
 
 	});
 
-
-
-	it("should be able set the name of the user and get counter", async function () {
-		let instance = greetings(pool);
-
+	it("should be able set the name of the user and get overall counter", async function () {
+		// let instance = greetings(pool);
 		await instance.enterName("Themba");
 
 		assert.equal(await instance.overallCounter(), 1);
 
 	});
 
-
 	it("should be able take in a different language and return message", async function () {
-		let instance = greetings(pool);
-
+		
 
 		var message = await instance.language("Isixhosa", "Themba");
 		var message2 = await instance.language("English", "Themba");
@@ -66,70 +56,182 @@ describe("The greetings webapp", function () {
 
 	it("should be able check if no name is updated and return undefined or empty", async function () {
 
-		let instance = greetings();
+		let instance = greetings(pool);
 
-		await instance.existDbAndCount();
-
-		await instance.setName();
-		await instance.setName();
-
-		assert.equal(await instance.existDbAndCount("Thabiso"), undefined);
+		assert.equal(undefined, await instance.getCountForUser('sipho'));
 
 	});
+
+	it("should be able check count for specific  user", async function () {
+
+		let instance = greetings(pool);
+
+		//await instance.existDbAndCount();
+
+		await instance.enterName("Thabie");
+		await instance.enterName("zweli");
+
+		assert.deepEqual(await instance.getCountForUser("zweli"), 1);
+
+	});
+
+
+		it("should be able to reset the counter back to zero", async function () {
+
+			let instance = greetings(pool);
+
+			
+			await instance.enterName("Hloni");
+			await instance.enterName("Tau");
+
+	await instance.resetFtn()
+			assert.deepEqual([], await instance.getName() );
+
+		});
+
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// - DATABASE_URL=postgresql://postgres@localhost:5432/my_products_tests
+
+
+	// ### functions tests
+
+//await instance.existDbAndCount();
+
+
+
+// let instance = greetings(pool);
+
+
+
+
+		//await instance.existDbAndCount();
+
+		// await instance.enterName("sipho");
+		// await instance.enterName("sipho");
+
+
+	// insert query to look into
+	// const INSERT_QUERY = 'INSERT INTO greetings (name, count) values($1,$2)'
+
+// it("should be able check if no name is updated and return undefined or empty", async function () {
+
+	// 	let instance = greetings();
+
+	// 	await instance.existDbAndCount();
+
+	// 	await instance.enterName();
+	// 	await instance.enterName();
+
+	// 	assert.equal(await instance.existDbAndCount("Thabiso"), undefined);
+
+	// });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 	// ###               query tests
 
-	it("should be able to find a greet", async function () {
+	// it("should be able to find a greet", async function () {
 
-		await pool.query(INSERT_QUERY, ["Hloni", 7]);
+	// 	await pool.query(INSERT_QUERY, ["Hloni", 7]);
 
-		const results = await pool.query("select * from greetings where name = $1", ["Hloni"]);
+	// 	const results = await pool.query("select * from greetings where name = $1", ["Hloni"]);
 
-		// what fields should have been found in the database?5
-		assert.equal("Hloni", results.rows[0].name);
-		assert.equal(7, results.rows[0].count);
-		//assert.equal("Thursday", results.rows[0].arriving_on);
+	// 	// what fields should have been found in the database?5
+	// 	assert.equal("Hloni", results.rows[0].name);
+	// 	assert.equal(7, results.rows[0].count);
+	// 	//assert.equal("Thursday", results.rows[0].arriving_on);
 
-	});
-
-	it("should be able to update greetings", async function () {
-
-		await pool.query(INSERT_QUERY, ["Pedro", 4]);
-
-		let results = await pool.query("select * from greetings where name = $1", ["Pedro"]);
-
-		assert.equal("Pedro", results.rows[0].name);
-		assert.equal(4, results.rows[0].count);
+	// });
 
 
-		await pool.query("update greetings set count = $2  where name = $1", ["Pedro", 5]);
 
-		results = await pool.query("select * from greetings where name = $1", ["Pedro"]);
+	// it("should be able to update greetings", async function () {
 
-		// what new values should have been found
-		assert.equal("Pedro", results.rows[0].name);
-		assert.equal(5, results.rows[0].count);
+	// 	await pool.query(INSERT_QUERY, ["Pedro", 4]);
 
-	});
+	// 	let results = await pool.query("select * from greetings where name = $1", ["Pedro"]);
 
-	it("should be able to find greetings for 5 counts or longer", async function () {
+	// 	assert.equal("Pedro", results.rows[0].name);
+	// 	assert.equal(4, results.rows[0].count);
 
-		await pool.query(INSERT_QUERY, ["Pearl", 5]);
-		await pool.query(INSERT_QUERY, ["Quinton", 3]);
-		await pool.query(INSERT_QUERY, ["Thabile", 7]);
 
-		const results = await pool.query("select count(*) from greetings where count >= 5");
+	// 	await pool.query("update greetings set count = $2  where name = $1", ["Pedro", 5]);
 
-		// how many bookings should be found?
-		assert.equal(2, results.rows[0].count);
+	// 	results = await pool.query("select * from greetings where name = $1", ["Pedro"]);
 
-	});
+	// 	// what new values should have been found
+	// 	assert.equal("Pedro", results.rows[0].name);
+	// 	assert.equal(5, results.rows[0].count);
 
-	after(function () {
-		pool.end();
-	})
+	// });
 
-});
+	// it("should be able to find greetings for 5 counts or longer", async function () {
+
+	// 	await pool.query(INSERT_QUERY, ["Pearl", 5]);
+	// 	await pool.query(INSERT_QUERY, ["Quinton", 3]);
+	// 	await pool.query(INSERT_QUERY, ["Thabile", 7]);
+
+	// 	const results = await pool.query("select count(*) from greetings where count >= 5");
+
+	// 	// how many bookings should be found?
+	// 	assert.equal(2, results.rows[0].count);
+
+	// });
+
+	// after(function () {
+	// 	pool.end();
+	// })
+
+// });
 
 
 

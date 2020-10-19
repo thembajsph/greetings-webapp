@@ -2,28 +2,6 @@ const { lang } = require("moment");
 
 module.exports = function greet(pool) {
 
-  var greetedNames = [];
-
-  function setName(name) {
-
-    if (greetedNames.some(person => person.user === name)) {
-      for (let key of greetedNames) {
-        // console.log(key.counter + 1);
-
-        if (key.user === name) {
-          key.counter++;
-        }
-      }
-
-
-
-    } else {
-      greetedNames.push({
-        user: name,
-        counter: 1
-      })
-    }
-  };
 
   async function enterName(name) {
     const isAdded = await getCountForUser(name) > 0;
@@ -38,17 +16,16 @@ module.exports = function greet(pool) {
 
     await pool.query('INSERT INTO greetings (name, count) values($1,$2)', [name, 1])
   };
-  // if  (name)
 
   async function existDbAndCount(name) {
     try {
-
       const updateQuery = await pool.query('SELECT name FROM greetings WHERE name = $1', [name]);
-      return updateQuery;
+      console.log(updateQuery.rows);
+      return updateQuery.rows;
     } catch (error) {
-      console.log(error.name)
-      console.log(error.message)
-      console.log(error.stack)
+      // console.log(error.name)
+      // console.log(error.message)
+      // console.log(error.stack)
     }
 
   }
@@ -57,7 +34,7 @@ module.exports = function greet(pool) {
 
 
     let check = await existDbAndCount(name);
-    console.log(check);
+    // console.log(check);
     if (name !== "") {
 
 
@@ -83,11 +60,9 @@ module.exports = function greet(pool) {
 
   async function getName() {
     let names = await pool.query('SELECT name FROM greetings')
-    console.log(names);
+    // console.log(names);
     return names.rows;
   }
-
-
 
   async function overallCounter() {
     let count = await pool.query('SELECT id FROM greetings');
@@ -95,12 +70,12 @@ module.exports = function greet(pool) {
     return count.rowCount;
   }
 
-  function hasNumbers(name) {
+  // function hasNumbers(name) {
 
-  };
-  function clear() {
-    greetedNames = {};
-  }
+  // };
+  // function clear() {
+  //   greetedNames = {};
+  // }
 
 
   const getCountForUser = async (name) => {
@@ -118,21 +93,31 @@ module.exports = function greet(pool) {
   async function resetFtn() {
 
     let restart = await pool.query('DELETE FROM greetings ');
-    return restart;
+    // console.log(restart).rows;
   };
 
+  async function newFunctionFirstRoute() {
+
+    const greetedNames = await pool.query('select id, name,count as greets, time as "timeOfGreets" from greetings')
+
+    return greetedNames.rows;
+  }
+
+
+
+
   return {
-    clear,
-    setName,
+    //clear,
+    //setName,
     getName,
     language,
     overallCounter,
-    hasNumbers,
+    // hasNumbers,
     enterName,
     existDbAndCount,
     getCountForUser,
     resetFtn,
-
+    newFunctionFirstRoute
 
   };
 
