@@ -43,10 +43,13 @@ module.exports = function routesFact(greetings) {
             const greets = req.body["language"];
             // // console.log(greets);
             var userName = req.body.userName;
+
+            // const { langauge, userName} = req.body;
+
+
             // console.log(userName);
-            var sameCase = userName.charAt(0).toUpperCase() + userName.slice(1).toLowerCase();
-            var regex = /\d/g;
-            var regex2 = /[!@#$%^&*(),.;-_'"?":{}|<>]-[ A-Za-z]/g;
+            userName = userName.charAt(0).toUpperCase() + userName.slice(1).toLowerCase();
+            var regex = /^[a-zA-Z]+$/;
 
 
             // keeping div blank
@@ -56,70 +59,55 @@ module.exports = function routesFact(greetings) {
 
             }
 
-            if (!sameCase.match(regex) && !sameCase.match(regex2)) {
+            if (regex.test(userName)) {
 
-                console.log(sameCase.match(regex2));
+
+
+                // console.log(userName.match(regex2));
 
                 await greetings.enterName(userName)
-            
-            
-            
-            console.log('here now');
 
-            let greet = {
 
-                names: await greetings.language(greets, sameCase),
-                count: await greetings.overallCounter()
+
+                console.log('here now');
+
+                let greet = {
+
+                    names: await greetings.language(greets, userName),
+                    count: await greetings.overallCounter()
+
+                }
+
+                console.log('before rendering');
+
+                // console.log(greet)
+
+                // await greetings.getName()
+
+                res.render("index", {
+                    greet
+                    // timeOfGreets
+                    //greet
+
+
+                })
+
+
 
             }
 
-            console.log('before rendering');
-
-            // console.log(greet)
-
-           // await greetings.getName()
-
-            res.render("index", {
-                greet
-                // timeOfGreets
-                //greet
-            
-            
-            })
-            
-        
-
-
-        } 
-    }
+        }
         catch (error) {
             console.log(error.name);
             console.log(error.message);
             console.log(error.stack);
 
         }
-    
+
 
     };
- 
-    // const  thirdRoute  = async function(req,res) {
 
 
-    //         const newName = req.params.userName;
-
-    //         var names = await greetings.getName()
-    //         // console.log(names + "zxcvbnasdfghdfg")
-    //         if (newName != null) {
-
-    //           await greetings.enterName(newName)
-
-    //         }
-
-    //         res.render('greeted', {
-    //           name: names
-
-    //         })
-    //       }
 
 
     const thirdRoute = async function (req, res) {
@@ -183,7 +171,24 @@ module.exports = function routesFact(greetings) {
 }
 
 
+ // const  thirdRoute  = async function(req,res) {
 
+
+    //         const newName = req.params.userName;
+
+    //         var names = await greetings.getName()
+    //         // console.log(names + "zxcvbnasdfghdfg")
+    //         if (newName != null) {
+
+    //           await greetings.enterName(newName)
+
+    //         }
+
+    //         res.render('greeted', {
+    //           name: names
+
+    //         })
+    //       }
 
 
 
