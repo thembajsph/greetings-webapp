@@ -54,7 +54,7 @@ module.exports = function routesFact(greetings) {
 
             // keeping div blank
 
-            if (!userName) {
+            if (userName === "") {
                 req.flash("info", "enter your name")
 
             }
@@ -71,13 +71,20 @@ module.exports = function routesFact(greetings) {
 
                 console.log('here now');
 
-                let greet = {
+                greet = {
 
                     names: await greetings.language(greets, userName),
                     count: await greetings.overallCounter()
 
                 }
+            }
 
+            greet = {
+
+                names: await greetings.language(greets, userName),
+                count: await greetings.overallCounter()
+
+            }
                 console.log('before rendering');
 
                 // console.log(greet)
@@ -91,10 +98,6 @@ module.exports = function routesFact(greetings) {
 
 
                 })
-
-
-
-            }
 
         }
         catch (error) {
